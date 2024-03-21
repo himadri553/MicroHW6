@@ -1,25 +1,22 @@
 const int buttonPin = 2;
-const int ledpin = 13;
+const int ledpin = 8;
 volatile int buttonState = 0;
 
 void setup() {
-  pinMode(ledPin, OUTPUT);
-  pinMode(buttonPin, INPUT);
-  attachInterrupt(digitalPinToInterrupt(2), btn_ISR, CHANGE);
+  pinMode(ledpin, OUTPUT);
+  pinMode(buttonPin, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(buttonPin), btn_ISR, CHANGE);
 }
 
 void loop() {
-  if (buttonState == HIGH){
-    digitalWrite(ledPin, HIGH);
+  if (buttonState == LOW) {
+    digitalWrite(ledpin, HIGH);
   } 
-  else{
-    digitalWRITE(ledPin, LOW);
+  else {
+    digitalWrite(ledpin, LOW);
   }
 }
-void loop() {
-  int reading = digitalRead(buttonPin); // read the state of the button
 
-void btn_ISR(){
+void btn_ISR() {
   buttonState = digitalRead(buttonPin);
 }
-
