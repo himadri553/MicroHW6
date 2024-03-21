@@ -13,7 +13,7 @@ void setup() {
 }
 
 void loop() {
-  if (buttonState == HIGH){
+  if (buttonState == LOW){
     digitalWrite(ledPin, HIGH);
   } 
   else{
