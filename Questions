@@ -1,1 +1,12 @@
+What are the tradeoffs to consider when deciding to poll or use interrupts to accept input?
+ANS: Polling is immediate and repeated checks for a condition. Interrupts can take place at any time and don't need to be checked repeatedly.
 
+Which pins on the Arduino Mega are able to be used for interrupts?
+ANS: Pins 2 and 3.
+
+Which port and pin number on the AVR ATMEGA2560 do each pin number on the Arduino Mega from Q2 correspond to? 
+For example, the documentation (linked in slides), states that Digital Pin 0 on the Arduino corresponds to Port E Pin 0 (PE0) on the AVR.
+ANS:
+
+Describe the four ways an external interrupt can be triggered using the Arduino libraries.
+ANS:
