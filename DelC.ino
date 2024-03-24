@@ -1,15 +1,17 @@
 const int buttonPin = 2;
 const int ledpin = 13;
 int count = 0;
+int buttonState = 0;
+int lastButtonState = 0;
 
-// Variable to track time of last button press
+// Tracks time of last button press
 unsigned long lastDebounceTime = 0;
-unsigned long debounceDelay = 1000; // debounce time; increase if the button seems to bounce
+unsigned long debounceDelay = 50;
 
 void setup() {
   pinMode(ledPin, OUTPUT);
   pinMode(buttonPin, INPUT);
-  attachInterrupt(digitalPinToInterrupt(2), btn_ISR, CHANGE);
+  Serial.begin(9600);
 }
 
 void loop() {
@@ -37,8 +39,7 @@ void loop() {
       // if the button state is LOW (pressed)
       if (buttonState == LOW) {
         count++; // increment the count
-        Serial.print("Button pressed! Count: ");
-        Serial.println(count); // print the count to the serial monitor
+        delay(50); // debounce delay
       }
     }
   }
@@ -50,13 +51,28 @@ void loop() {
   if (millis() - lastDebounceTime > debounceDelay && buttonState == HIGH) {
     // indicate the end of the sequence by blinking the LED
     digitalWrite(ledPin, HIGH);
-    delay(100); // adjust the blink duration as needed
+    delay(100);
     digitalWrite(ledPin, LOW);
-    count = 0; // reset the count
-    Serial.println("End of sequence");
+    count = 0; // resets the count
   }
 }
 
-void btn_ISR(){
-  buttonState = digitalRead(buttonPin);
+// This code is similar to one above possibly, test which one works better
+ // Check if there's a pause between presses
+  if (lastButtonState == LOW && count > 0) {
+    // Blink LED count times
+    for (int i = 0; i < count; i++) {
+      digitalWrite(ledPin, HIGH);
+      delay(100);
+      digitalWrite(ledPin, LOW);
+      delay(100);
+    }
+
+    // Pause for approximately one second
+    delay(1000);
+
+    // Reset count
+    count = 0;
+  }
 }
+
