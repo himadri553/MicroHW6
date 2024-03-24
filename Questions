@@ -9,4 +9,7 @@ For example, the documentation (linked in slides), states that Digital Pin 0 on 
 ANS:
 
 Describe the four ways an external interrupt can be triggered using the Arduino libraries.
-ANS:
+ANS: Low, interrupt is triggered when the voltage on the interrupt pin falls to LOW. This is activated when the LOW parameter is attached to the interrupt.
+     Change,  interrupt is triggered when the voltage on the interrupt pin changes from LOW to HIGH or vice versa. This is activated when the CHANGE parameter is attached to the interrupt.
+     Rising, similar to CHANGE, the interrupt is triggered when the voltage on the interrupt pin changes only from LOW to HIGH. This is activated when the RISING parameter is attached to the interrupt.
+     Falling, opposite of RISING, the interrupt is triggered when the voltage on the interrupt pin changes only from HIGH to LOW. This is activated when the FALLING parameter is attached to the interrupt.
