@@ -6,7 +6,7 @@ ANS: Pins 2 and 3.
 
 Which port and pin number on the AVR ATMEGA2560 do each pin number on the Arduino Mega from Q2 correspond to? 
 For example, the documentation (linked in slides), states that Digital Pin 0 on the Arduino corresponds to Port E Pin 0 (PE0) on the AVR.
-ANS:
+ANS:95(PF2) and 94(PF3)
 
 Describe the four ways an external interrupt can be triggered using the Arduino libraries.
 ANS: Low, interrupt is triggered when the voltage on the interrupt pin falls to LOW. This is activated when the LOW parameter is attached to the interrupt.
