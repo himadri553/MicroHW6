@@ -1,50 +1,68 @@
-const int buttonPin = 2;
-const int ledpin = 8;
-int countFromButton = 0;
-int CurrentButtonState = 0;
-int lastButtonState = 0;
-// Tracks time of last button press
+/*
+  Del C:
+  button(toggle) will turn LED on or off
+  once the button is turned on, wait and turn servo on to push the button off
+  if possible, use a counter to make the machine more "mad" and swtich up servo behavior
+*/
+#define buttonPin 2
+#define LED_Pin 42
+int ledState = LOW;
+int madState = 1;
+bool mad_trigger = false;
 unsigned long lastDebounceTime = 0;
 unsigned long debounceDelay = 50;
 
 void setup() {
-  pinMode(ledpin, OUTPUT);
   pinMode(buttonPin, INPUT_PULLUP);
+  pinMode(LED_Pin, OUTPUT);
   attachInterrupt(digitalPinToInterrupt(buttonPin), initial_buttonISR, FALLING);
   Serial.begin(9600);
-}
 
-void blink(int count) {
-  for (int i = 0; i < count; i++) {
-    digitalWrite(ledpin, HIGH);
-    delay(100);
-    digitalWrite(ledpin, LOW);
-    delay(100);
-  }
 }
 
 void loop() {
-  blink(countFromButton);
-  Serial.println(countFromButton);
-  delay(1000);
-}
+  // vars
 
-void initial_buttonISR() { // triggred at first button press
-  Serial.println("initial_buttonISR triggred");
-  CurrentButtonState = digitalRead(buttonPin);
-  unsigned long currentTime = millis();
-
-  // checks if 1sec has passed and is start of new sequence
-  if (currentTime - lastDebounceTime >= 1000) {
-    countFromButton = 0; // reset count
-    Serial.println("reset count");
+  // check if led is on, then get mad
+  if (ledState == HIGH) {
+    mad_trigger = true;
   }
-  else { // is part of sequence
-    if ((currentTime - lastDebounceTime) > debounceDelay) { // check for valid debounce 
-      countFromButton++;
-      Serial.println("valid counting press: count going up");
+  
+  if (mad_trigger == true) {
+    mad_trigger = false; // cool off after
+    switch (madState) {
+      case 1:
+        madState1();
+        break;
+      case 2:
+        madState2();
+        break;
+      case 3:
+        madState3();
+        break;
     }
   }
-
-  lastDebounceTime = currentTime; // update time
 }
+
+void initial_buttonISR() {
+  unsigned long currentTime = millis();
+  if ((currentTime - lastDebounceTime) > debounceDelay) { // check debounce
+    // toggle led
+    ledState = !ledState;
+    digitalWrite(LED_Pin, ledState);
+  }
+}
+
+// servo actions when mad, will not be mad after
+void madState1() {
+  
+}
+
+void madState2() {
+
+}
+
+void madState3() {
+
+}
+
